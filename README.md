@@ -27,3 +27,28 @@ To further exploit the usage of these chapters, we design a class for the chapte
 The dirty work are done by standard `nltk` library. The lemmatized work uses the POS of the words which comes come `nltk.tag.pos_tag`
 
 These dirty wordk is a little bit time-consuming that parsing all the chapters needs 2min56s. So we cache the binary form of the python objects in `data/chapter_cache.pkl`
+
+## vector_based_retrieval
+
+We use the chapter_dictionary listed above to build our wordbag: a list field of str. The words in each chapter_dictionary.tf_count.keys() will be appended to this list. Of course we make sure that the words in the bag are different from each other.
+
+Another important data structure: wordnumber, a python dictionary that convert a word into it's index in wordbag list (if it exists in wordbag).
+
+A Python dictionary is used to describe the content of a query. It's fields are listed below:
+
+ * text: a str field. The content of this query
+ * raw_words: a list field of str. Corresponding to the query.text .
+ * lemmas: a list of lemmatized words.
+ * tf_count: a dict containing the non-stopwords and their frequencies.
+ * non_stop_word_count: number of the non-stopwords.
+
+The definition of the data model is in 'data/query.py'
+
+With all structure we have, it's simply to calculate tf-idf vector of each \'document\'---chapter, and each query. Notention: even if the query.tf_count.keys() may contain words that are not in the wordbag, we only calculate the tf-idf value of the words in the wordbag.
+
+The documents corresponding to the K vectors with the highest cosine_similarity to the query vector are selected as the related documents and returned as the final retrieval results.
+
+## inverted_index
+
+It's a list of lists of numbers. Each sublist records the indexs in the dictlist of the document in which the corresponding word appears. eg:  inverted_index\[i\] records all the indexes of document containing wordbag[i]. 
+

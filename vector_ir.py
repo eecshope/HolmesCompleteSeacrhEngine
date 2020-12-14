@@ -10,23 +10,23 @@ dictlist = pkl.load(raw_file)
 raw_file.close()
 
 dictnum = len(dictlist)
-wordtag = set({})
+wordbag = set({})
 wordnumber = dict({})
 for i in range(dictnum):
 	for lemma in dictlist[i].tf_count.keys():
-		wordtag.add(lemma)
-wordtag = list(wordtag)
+		wordbag.add(lemma)
+wordbag = list(wordbag)
 
-wordtag_file = open('./data/wordtag_cache.pkl','wb')
-pkl.dump(wordtag,wordtag_file)
-wordtag_file.close()
+wordbag_file = open('./data/wordbag_cache.pkl','wb')
+pkl.dump(worbtag,worbtag_file)
+wordbag_file.close()
 
-wordnum = len(wordtag)
+wordnum = len(wordbag)
 inverted_index = list()
 
 
 for i in range(wordnum):
-	wordnumber[wordtag[i]] = i
+	wordnumber[wordbag[i]] = i
 
 wordnumber_file = open('./data/wordnumber_cache.pkl','wb')
 pkl.dump(wordnumber,wordnumber_file)
@@ -35,7 +35,7 @@ wordnumber_file.close()
 idf = [0 for _ in range(wordnum)]
 tfidf = [[0 for _ in range(wordnum)] for __ in range(dictnum)]
 
-for lemma in wordtag:
+for lemma in wordbag:
 	doclist = list({})
 	for i in range(dictnum):
 		if lemma in dictlist[i].tf_count.keys():

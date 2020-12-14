@@ -7,10 +7,10 @@ dictlist = pkl.load(raw_file)
 raw_file.close()
 dictnum = len(dictlist)
 
-raw_file = open('./data/wordtag_cache.pkl','rb')
-wordtag = pkl.load(raw_file)
+raw_file = open('./data/wordbag_cache.pkl','rb')
+wordbag = pkl.load(raw_file)
 raw_file.close()
-wordnum = len(wordtag)
+wordnum = len(wordbag)
 
 raw_file = open('./data/wordnumber_cache.pkl','rb')
 wordnumber = pkl.load(raw_file)
@@ -33,7 +33,7 @@ def handle_request(str_query,k):
 	q = query.Query(str_query)
 	q_tfidf = [0 for i in range(wordnum)]
 	for lemma in q.tf_count.keys():
-		if lemma in wordtag:
+		if lemma in wordbag:
 			q_tfidf[wordnumber[lemma]] = q.tf_count[lemma]*idf[wordnumber[lemma]]
 
 	res = [[0,0] for _ in range(dictnum)]

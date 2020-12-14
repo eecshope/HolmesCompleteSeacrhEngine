@@ -5,8 +5,8 @@ raw_file = open('./data/inverted_index_cache.pkl','rb')
 inverted_index = pkl.load(raw_file)
 raw_file.close()
 
-raw_file = open('./data/wordtag_cache.pkl','rb')
-wordtag = pkl.load(raw_file)
+raw_file = open('./data/wordbag_cache.pkl','rb')
+wordbag = pkl.load(raw_file)
 raw_file.close()
 
 raw_file = open('./data/wordnumber_cache.pkl','rb')
