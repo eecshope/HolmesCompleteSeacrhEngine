@@ -4,7 +4,7 @@ This is the class project of the Modern Information Retreival Methods about desi
 
 ## Chapter Structure
 
-We use a chapter as the basic unit in this project. The python notebook 'data/parse_raw.ipynb' is used to parse the raw text 'sherlock.txt' into several objects for chapters arranged in a python list. Besides, it seperates the stories and write them into several isolated files, each file name of which is the true name of the story.
+We use a chapter as the basic unit in this project. The python notebook 'data/raw_chapters/parse_raw.ipynb' is used to parse the raw text 'sherlock.txt' into several objects for chapters arranged in a python list. Besides, it seperates the stories and write them into several isolated files, each file name of which is the true name of the story.
 
 A Python dictionary is used to describe the content of a chapter. It's fields are listed below:
 
@@ -30,11 +30,11 @@ These dirty wordk is a little bit time-consuming that parsing all the chapters n
 
 ## vector_based_retrieval
 
-We use the chapter_dictionary listed above to build our wordbag: a list field of str. The words in each chapter_dictionary.tf_count.keys() will be appended to this list. Of course we make sure that the words in the bag are different from each other.
+We use the chapter_dictionary listed above to build our wordbag: a list field of str. The lemmas in each chapter_dictionary.tf_count.keys() will be appended to this list. Of course we make sure that the lemmas in the bag are different from each other. Besides, this is a set so no duplicated record is in this set.
 
-Another important data structure: wordnumber, a python dictionary that convert a word into it's index in wordbag list (if it exists in wordbag).
+Another important data structure: wordnumber, a python dictionary that convert a word into it's index in wordbag list (if it exists in wordbag). To be concise, it's a dictionary of the lemmas appeared in the corpus.
 
-A Python dictionary is used to describe the content of a query. It's fields are listed below:
+A Python dictionary is used to describe the content of a query. In fact, it looks a little bit like an chapter. The fields are listed below:
 
  * text: a str field. The content of this query
  * raw_words: a list field of str. Corresponding to the query.text .
@@ -42,12 +42,13 @@ A Python dictionary is used to describe the content of a query. It's fields are 
  * tf_count: a dict containing the non-stopwords and their frequencies.
  * non_stop_word_count: number of the non-stopwords.
 
-The definition of the data model is in 'data/query.py'
+The definition of the data model is in 'model/query.py'
 
-With all structure we have, it's simply to calculate tf-idf vector of each \'document\'---chapter, and each query. Notention: even if the query.tf_count.keys() may contain words that are not in the wordbag, we only calculate the tf-idf value of the words in the wordbag.
+With all structure we have, it's simply to calculate tf-idf vector of each \'document\'---chapter, and each query. Note: even if the query.tf_count.keys() may contain words that are not in the wordbag, we only calculate the tf-idf value of the words in the wordbag. The \[UNK\] are neglected. 
 
 The documents corresponding to the K vectors with the highest cosine_similarity to the query vector are selected as the related documents and returned as the final retrieval results.
 
+All of these data mentioned above are cached in `data/caches` with their names and the suffice '.pkl'. To generate them, just run `vector_ir.py` in the root directory of the project. 
 ## inverted_index
 
 It's a list of lists of numbers. Each sublist records the indexs in the dictlist of the document in which the corresponding word appears. eg:  inverted_index\[i\] records all the indexes of document containing wordbag[i]. 

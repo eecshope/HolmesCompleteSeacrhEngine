@@ -1,9 +1,10 @@
+# This file is used to build the corpus-level word-bag, dictionary, the idf number of each word and preprocess the
+# feature vector (tf-idf) for each document.
 import _pickle as pkl
 import math
-
 from model import inverted_unit
 
-raw_file = open('./data/chapter_cache.pkl', 'rb')
+raw_file = open('./data/caches/chapter_cache.pkl', 'rb')
 dictlist = pkl.load(raw_file)
 raw_file.close()
 
@@ -15,7 +16,7 @@ for i in range(dictnum):
         wordbag.add(lemma)
 wordbag = list(wordbag)
 
-wordbag_file = open('./data/wordbag_cache.pkl', 'wb')
+wordbag_file = open('./data/caches/wordbag_cache.pkl', 'wb')
 pkl.dump(wordbag, wordbag_file)
 wordbag_file.close()
 
@@ -25,7 +26,7 @@ inverted_index = list()
 for i in range(wordnum):
     wordnumber[wordbag[i]] = i
 
-wordnumber_file = open('./data/wordnumber_cache.pkl', 'wb')
+wordnumber_file = open('./data/caches/wordnumber_cache.pkl', 'wb')
 pkl.dump(wordnumber, wordnumber_file)
 wordnumber_file.close()
 
@@ -40,7 +41,7 @@ for lemma in wordbag:
             doclist.append(i)
     inverted_index.append(inverted_unit.InvertedUnit(doclist))
 
-inverted_file = open('./data/inverted_index_cache.pkl', 'wb')
+inverted_file = open('./data/caches/inverted_index_cache.pkl', 'wb')
 pkl.dump(inverted_index, inverted_file)
 inverted_file.close()
 
@@ -51,10 +52,10 @@ for i in range(dictnum):
     for lemma in dictlist[i].tf_count.keys():
         tfidf[i][wordnumber[lemma]] = dictlist[i].tf_count[lemma] * idf[wordnumber[lemma]]
 
-idf_file = open('./data/idf_cache.pkl', 'wb')
+idf_file = open('./data/caches/idf_cache.pkl', 'wb')
 pkl.dump(idf, idf_file)
 idf_file.close()
 
-tfidf_file = open('./data/tfidf_cache.pkl', 'wb')
+tfidf_file = open('./data/caches/tfidf_cache.pkl', 'wb')
 pkl.dump(tfidf, tfidf_file)
 tfidf_file.close()

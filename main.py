@@ -4,25 +4,25 @@ import numpy as np
 
 from model import query
 
-raw_file = open('./data/chapter_cache.pkl', 'rb')
+raw_file = open('./data/caches/chapter_cache.pkl', 'rb')
 dictlist = pkl.load(raw_file)
 raw_file.close()
 dictnum = len(dictlist)
 
-raw_file = open('./data/wordbag_cache.pkl', 'rb')
+raw_file = open('./data/caches/wordbag_cache.pkl', 'rb')
 wordbag = pkl.load(raw_file)
 raw_file.close()
 wordnum = len(wordbag)
 
-raw_file = open('./data/wordnumber_cache.pkl', 'rb')
+raw_file = open('./data/caches/wordnumber_cache.pkl', 'rb')
 wordnumber = pkl.load(raw_file)
 raw_file.close()
 
-raw_file = open('./data/idf_cache.pkl', 'rb')
+raw_file = open('./data/caches/idf_cache.pkl', 'rb')
 idf = pkl.load(raw_file)
 raw_file.close()
 
-raw_file = open('./data/tfidf_cache.pkl', 'rb')
+raw_file = open('./data/caches/tfidf_cache.pkl', 'rb')
 tfidf = pkl.load(raw_file)
 raw_file.close()
 
