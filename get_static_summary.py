@@ -32,7 +32,7 @@ for chapter in chapters:
 print("There're %d concepts and %d sentences have been skiped" % (len(bigram), neglected_sentences))
 
 summaries = list([])
-for idx, chapter in tqdm(chapters):
+for idx, chapter in tqdm(enumerate(chapters), total=len(chapters)):
     summary_ids = nlp.get_summary(idf_bigram, chapter.lemmas, 300)
 
     name = chapter.story
