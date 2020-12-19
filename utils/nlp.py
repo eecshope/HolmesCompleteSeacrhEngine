@@ -1,5 +1,5 @@
 from nltk.corpus import stopwords
-from pulp import LpMaximize, LpProblem, LpVariable, GLPK_CMD
+from pulp import LpMaximize, LpProblem, LpVariable, GLPK
 import numpy as np
 
 STOPWORDS = stopwords.words('english') + ["'", '"', '!', ',', '.', '?', '-s', '-ly', '</s> ', 's']
@@ -77,7 +77,7 @@ def get_summary(concept_idf, lemmas, max_length):
             cnt += 1
 
     model += target
-    model.solve(solver=GLPK_CMD(msg=False))
+    model.solve(solver=GLPK(msg=False))
 
     selected_sentence = list([])
     for var in model.variables():
