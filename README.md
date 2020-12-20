@@ -53,3 +53,19 @@ All of these data mentioned above are cached in `data/caches` with their names a
 
 It's a list of lists of numbers. Each sublist records the indexs in the dictlist of the document in which the corresponding word appears. eg:  inverted_index\[i\] records all the indexes of document containing wordbag[i]. 
 
+## Get Static Summary
+
+We retrieve the sentences that have the most important 'concepts' (bigrams) and the number of the total words is less than a given upper bound. Obviously, it's a Integer Linear Programming problem and the key problem is that how can we say that 'a concept' is important.
+
+According to Dan Gillick and Benoit Favre, the 'concepts' that are more likely to appear in the retrieved sentences have higher idf scores. So we weight the concepts by their idf scores. 
+
+As for the implementation, we use `pulp` as the frontend and `GLPK` as the backend to solve the ILP problem. Because ILP is a NP-Hard problem, getting the results is very time-consuming. Considering that we want to get the static summaries for these chapters and there aren't many chapters in this corpus, we preprocess these summaries beforehand and store them in a `JSON` file: `data/cache/summary.json`. It's a list of chapter-level units. Each unit has the following field:
+
+- `id` : the id of the chapter. Following the order in `chapter_cache.pkl` and starting from 0
+- `chapter`: the name of the chapter in the form of **story+part+chapter**. If this chapter does not have a part name or a chapter name, the corresponding string is neglected. 
+- `summary` a list of summaries. Each summary is in the form of a string. 
+
+There's one thing that worth mentioning. The sentences are presented in the order of their presentation in the original text. Because *Holmes Complete* has too much dialogue, we find than arrange the summaries in this way makes the summaries seem like a standalone story but filled with mysterious. 
+
+To generate the summaries, just run `get_static_summary.py` in the root directory of the project then ,,, just wait because it will take up about 5 hours.
+
