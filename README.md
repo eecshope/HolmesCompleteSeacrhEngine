@@ -51,7 +51,19 @@ The documents corresponding to the K vectors with the highest cosine_similarity 
 All of these data mentioned above are cached in `data/caches` with their names and the suffice '.pkl'. To generate them, just run `vector_ir.py` in the root directory of the project. 
 ## inverted_index
 
-It's a list of lists of numbers. Each sublist records the indexs in the dictlist of the document in which the corresponding word appears. eg:  inverted_index\[i\] records all the indexes of document containing wordbag[i]. 
+It's a list of class InvertedUnit for each word in wordbag. Class InvertedUnit defined as follow:
+
+​	It is consist of three member variables:
+
+​	chapter_index: record the chapter's index in struct `dictlist`. 
+
+​	paragraph_index: record the paragraph's index in struct `paralist`.
+
+​	position: a list of number. Each number record one position of the word presented in the paragraph.
+
+## Key words highlight
+
+Given a query str, We count the number of keywords and the types of keywords presented in each paragraph, and retrival the related paragraph of this query. After getting the most related paragraph, we print the content of it, and highlight every key words.
 
 ## Get Static Summary
 
