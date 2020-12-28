@@ -83,3 +83,6 @@ To generate the summaries, just run `get_static_summary.py` in the root director
 
 ## Recommend System
 The recommend system is somehow simple. We fully utilize the tf-idf features retrieved beforehand and calculate the cosine similarities to find out the most close ones. The document itself is not included. The result are cached in `recommend.json`.
+
+## Names Retrieval 
+We retrieve the names of each chapter and formed them into a list. Duplicated names are removed. The method for retrieving the names is based on NER, implemented by NLTK group. The result is cached in `chapter_characters.json`. 

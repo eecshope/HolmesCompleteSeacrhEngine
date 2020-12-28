@@ -40,4 +40,9 @@ This is cached for the recommended documents for each document in the corpus. It
 Example:
 ```
 {"chapter_id": 0, "recommend": [1, 64, 51, 60, 12]}
+```
 
+### `chapter_characters.json`
+This is a cache of characters appearing in each chapter. A big list. The structure of each sub-unit is listed below:
+-  `idx` the id of the chapter
+-  `names` a list of names 
