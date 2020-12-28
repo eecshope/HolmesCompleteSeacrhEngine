@@ -22,4 +22,14 @@ A brief view of main characters. It's a list of dict which includes several info
 	* `chapters` : A str list of the name of chapter that the character presents. 
 
 
+### `tfifd_cache.pkl`
+This is a pickle-form cache for the preprocessed tf-idf vectors for each chapter. Each vector is in a list and the lists are wrapped by a big list. The vectors are arranged in the order of `chapter_cahce.pkl` and the words are arranged in the order of `wordbag_cache.pkl`.
+
+The actual number is the result of `tf: term frequency (unnormalized)`* `idf: inverted document frequency`, where
+
+$$
+idf = log(\frac{n_{doc}}{n_{appeared}})
+$$
+
+
 
