@@ -31,5 +31,13 @@ $$
 idf = log(\frac{n_{doc}}{n_{appeared}})
 $$
 
+### `recommend.json`
+This is cached for the recommended documents for each document in the corpus. It's a big list ane the structure of the sub-unit is listed below:
 
+- `chapter_id`: the id of this chapter. An integer
+- `recommend`: the ids of the recommended chapters. A list of integers.
+
+Example:
+```
+{"chapter_id": 0, "recommend": [1, 64, 51, 60, 12]}
 
