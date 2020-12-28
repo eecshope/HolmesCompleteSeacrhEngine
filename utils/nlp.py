@@ -1,6 +1,7 @@
 from nltk.corpus import stopwords
 from pulp import LpMaximize, LpProblem, LpVariable, GLPK
 import numpy as np
+import nltk
 
 STOPWORDS = stopwords.words('english') + ["'", '"', '!', ',', '.', '?', '-s', '-ly', '</s> ', 's']
 
@@ -86,3 +87,43 @@ def get_summary(concept_idf, lemmas, max_length):
     selected_sentence_id = sorted(selected_sentence)
 
     return selected_sentence_id
+
+
+def get_names(tokenized_sentences: list) -> list:
+    tag_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+    ner_sentences = [nltk.ne_chunk(sentence) for sentence in tag_sentences]
+
+    def get_name(parent):
+        local_names = list([])
+        for node in parent:
+            if type(node) is nltk.Tree:
+                if node.label() == 'PERSON':
+                    local_names.append([a[0] for a in node.leaves()])
+                get_name(node)
+        return local_names
+
+    names = list([])
+    for ner_sentence in ner_sentences:
+        names += get_name(ner_sentence)
+
+    single_names = list([])
+    full_names = list([])
+    for name in names:
+        if len(name) == 1:
+            single_names.append(name[0])
+        else:
+            full_names.append(name)
+
+    names = set()
+    for single_name in single_names:
+        isok = True
+        for full_name in full_names:
+            if single_name in full_name:
+                isok = False
+                break
+        if isok:
+            names.add(single_name)
+
+    for full_name in full_names:
+        names.add(" ".join(full_name))
+    return list(names)
