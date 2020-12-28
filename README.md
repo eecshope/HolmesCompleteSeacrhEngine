@@ -81,3 +81,5 @@ There's one thing that worth mentioning. The sentences are presented in the orde
 
 To generate the summaries, just run `get_static_summary.py` in the root directory of the project then ,,, just wait because it will take up about 5 hours.
 
+## Recommend System
+The recommend system is somehow simple. We fully utilize the tf-idf features retrieved beforehand and calculate the cosine similarities to find out the most close ones. The document itself is not included. The result are cached in `recommend.json`.
