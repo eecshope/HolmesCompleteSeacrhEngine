@@ -48,4 +48,4 @@ This is a cache of characters appearing in each chapter. A big list. The structu
 -  `names` a list of names 
 
 ### `chapter_cache_spoiler.pkl`
-Add 'spoiler' attribute to the objects. run `add_spoiler.py` in directory `misc` to generate this file. Be sure to generate `chapter_cache.pkl` beforehand.
+Add 'spoiler' attribute to the objects. run `add_spoiler.py` in directory `misc` to generate this file. Be sure to generate `chapter_cache.pkl` beforehand. The attribute is related to a list of string. Each string is an individual row.
